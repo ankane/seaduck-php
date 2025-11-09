@@ -55,7 +55,7 @@ You can also load data directly from other [data sources](https://duckdb.org/doc
 
 ```php
 $catalog->attach('blog', 'postgres://localhost:5432/blog');
-$catalog->sql('INSERT INTO events SELECT * FROM blog.ahoy_events');
+$catalog->sql('INSERT INTO events SELECT * FROM blog.events');
 ```
 
 Query the data
