@@ -1,0 +1,13 @@
+name: build
+on: [push, pull_request]
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v5
+      - run: composer install
+      - run: docker compose up -d --quiet-pull
+      - uses: ankane/setup-postgres@v1
+        with:
+          database: seaduck_php_test
+      - run: composer test
