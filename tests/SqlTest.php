@@ -44,20 +44,18 @@ final class SqlTest extends TestCase
 
     public function testUpdate()
     {
-        $this->expectException(Saturio\DuckDB\Exception\BindValueException::class);
-        $this->expectExceptionMessage('Not implemented Error');
-
         $this->createEvents();
         $this->catalog->sql('UPDATE events SET b = ? WHERE a = ?', ['two!', 2]);
+        $result = $this->catalog->sql('SELECT * FROM events ORDER BY a');
+        $this->assertEquals([[1, 'one'], [2, 'two!'], [3, 'three']], $result->rows());
     }
 
     public function testDelete()
     {
-        $this->expectException(Saturio\DuckDB\Exception\BindValueException::class);
-        $this->expectExceptionMessage('Not implemented Error');
-
         $this->createEvents();
         $this->catalog->sql('DELETE FROM events WHERE a = ?', [2]);
+        $result = $this->catalog->sql('SELECT * FROM events ORDER BY a');
+        $this->assertEquals([[1, 'one'], [3, 'three']], $result->rows());
     }
 
     public function testView()
@@ -71,8 +69,8 @@ final class SqlTest extends TestCase
 
     public function testMultipleStatements()
     {
-        // TODO fix
-        $this->expectException(TypeError::class);
+        $this->expectException(Saturio\DuckDB\Exception\PreparedStatementExecuteException::class);
+        $this->expectExceptionMessage('Cannot prepare multiple statements at once!');
 
         $this->catalog->sql('SELECT 1; SELECT 2');
     }
