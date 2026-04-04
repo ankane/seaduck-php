@@ -29,12 +29,10 @@ class Catalog
         $attachOptions = array_merge(['type' => 'iceberg'], $attachOptions);
         $this->attachWithOptions($this->catalog, (string) $url, $attachOptions);
 
-        try {
-            $this->useNamespace($defaultNamespace);
-        } catch (\Saturio\DuckDB\Exception\PreparedStatementExecuteException $e) {
+        if (!$this->namespaceExists($defaultNamespace)) {
             $this->createNamespace($defaultNamespace, ifNotExists: true);
-            $this->useNamespace($defaultNamespace);
         }
+        $this->useNamespace($defaultNamespace);
         $this->detach('memory');
     }
 

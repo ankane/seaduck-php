@@ -109,7 +109,7 @@ final class CatalogTest extends TestCase
         $this->catalog->detach('pg');
 
         $this->expectException(Saturio\DuckDB\Exception\PreparedStatementExecuteException::class);
-        $this->expectExceptionMessage('Table with name postgres_events does not exist!');
+        $this->expectExceptionMessage('does not exist');
         $this->catalog->sql('INSERT INTO events SELECT * FROM pg.postgres_events');
     }
 
@@ -137,11 +137,11 @@ final class CatalogTest extends TestCase
 
     public function testExtensionVersion()
     {
-        $this->assertEquals('db7c01e9', $this->catalog->extensionVersion());
+        $this->assertEquals('effe9de4', $this->catalog->extensionVersion());
     }
 
     public function testDuckdbVersion()
     {
-        $this->assertEquals('v1.4.2', $this->catalog->duckdbVersion());
+        $this->assertEquals('v1.5.1', $this->catalog->duckdbVersion());
     }
 }
