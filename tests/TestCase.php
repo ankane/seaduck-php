@@ -26,14 +26,15 @@ abstract class TestCase extends BaseTestCase
                 warehouse: getenv('GLUE_WAREHOUSE')
             );
         } elseif ($catalog == 'rest') {
+            $host = getenv('REST_HOST') ?: '127.0.0.1';
             return new \SeaDuck\RestCatalog(
                 ...$this->catalogOptions(),
-                uri: 'http://localhost:8181',
+                uri: 'http://' . $host . ':8181',
                 _secretOptions: [
                     'type' => 's3',
                     'key_id' => 'admin',
                     'secret' => 'password',
-                    'endpoint' => '127.0.0.1:9000',
+                    'endpoint' => $host . ':9000',
                     'url_style' => 'path',
                     'use_ssl' => 0
                 ]
