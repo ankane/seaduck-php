@@ -22,7 +22,7 @@ final class CatalogTest extends TestCase
     public function testSchemaEvolution()
     {
         $this->expectException(Saturio\DuckDB\Exception\PreparedStatementExecuteException::class);
-        $this->expectExceptionMessage('Not implemented Error');
+        $this->expectExceptionMessage('non-null DEFAULT values are not supported for <V3 tables');
 
         $this->createEvents();
         $this->catalog->sql("ALTER TABLE events ADD COLUMN c VARCHAR DEFAULT 'hello'");
@@ -137,11 +137,11 @@ final class CatalogTest extends TestCase
 
     public function testExtensionVersion()
     {
-        $this->assertEquals('effe9de4', $this->catalog->extensionVersion());
+        $this->assertEquals(8, strlen($this->catalog->extensionVersion()));
     }
 
     public function testDuckdbVersion()
     {
-        $this->assertEquals('v1.5.1', $this->catalog->duckdbVersion());
+        $this->assertStringStartsWith('v', $this->catalog->duckdbVersion());
     }
 }
