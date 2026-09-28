@@ -6,7 +6,11 @@ jobs:
     steps:
       - uses: actions/checkout@v7
       - run: composer install
-      - run: docker compose up -d --quiet-pull
+      - run: echo /home/linuxbrew/.linuxbrew/bin >> $GITHUB_PATH
+      - run: |
+          brew install seaweedfs
+          cd ~
+          weed mini -tableBucket=seaduck-php-test &
       - uses: ankane/setup-postgres@v1
         with:
           database: seaduck_php_test

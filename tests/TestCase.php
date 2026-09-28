@@ -32,9 +32,7 @@ abstract class TestCase extends BaseTestCase
                 uri: 'http://' . $host . ':8181',
                 _secretOptions: [
                     'type' => 's3',
-                    'key_id' => 'admin',
-                    'secret' => 'password',
-                    'endpoint' => $host . ':9000',
+                    'endpoint' => $host . ':8333',
                     'url_style' => 'path',
                     'use_ssl' => 0
                 ]
